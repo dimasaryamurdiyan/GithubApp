@@ -59,7 +59,7 @@ class UserRepository @Inject constructor(
         saveCallResult = {
             val list = ArrayList<UserEntity>()
             for(response in it){
-                val movie = UserEntity(
+                val user = UserEntity(
                     response.id,
                     response.login,
                     response.nodeId,
@@ -93,7 +93,7 @@ class UserRepository @Inject constructor(
                     response.createdAt,
                     response.updatedAt,
                 )
-                list.add(movie)
+                list.add(user)
             }
             localDataSource.insertAll(list) }
     )
