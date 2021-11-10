@@ -1,11 +1,14 @@
 package com.trial.github_android.data.repository
 
+import androidx.lifecycle.liveData
 import com.trial.github_android.data.entities.UserEntity
 import com.trial.github_android.data.local.UserDao
 import com.trial.github_android.data.remote.RemoteDataSource
+import com.trial.github_android.utils.Resource
 import com.trial.github_android.utils.performGetOperation
 import dagger.Module
 import dagger.hilt.InstallIn
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -97,4 +100,13 @@ class UserRepository @Inject constructor(
             }
             localDataSource.insertAll(list) }
     )
+
+    fun getUsersRemote() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = remoteDataSource.getUsers()))
+        }catch (exception: Exception){
+            emit(Resource.error(exception.message ?: "Error Occurred!"))
+        }
+    }
 }

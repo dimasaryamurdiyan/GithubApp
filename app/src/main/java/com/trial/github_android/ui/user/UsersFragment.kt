@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.trial.github_android.R
+import com.trial.github_android.data.entities.UserEntity
 import com.trial.github_android.databinding.FragmentUsersBinding
 import com.trial.github_android.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,6 +62,61 @@ class UsersFragment : Fragment(), UserAdapter.UserItemListener {
                     binding?.progressBar?.visibility = View.GONE
                     Timber.d("Users : ${it.data}")
                     if (!it.data.isNullOrEmpty()) adapter.setItems(ArrayList(it.data))
+                }
+                Resource.Status.ERROR ->
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+
+                Resource.Status.LOADING ->
+                    binding?.progressBar?.visibility = View.VISIBLE
+            }
+        })
+        viewModel.usersData.observe(viewLifecycleOwner, Observer{
+            when (it.status) {
+                Resource.Status.SUCCESS -> {
+                    binding?.progressBar?.visibility = View.GONE
+                    Timber.d("Users : ${it.data}")
+                    if (!it.data?.data.isNullOrEmpty()){
+                        val list = ArrayList<UserEntity>()
+                        for(response in it.data?.data!!){
+                            val user = UserEntity(
+                                response.id,
+                                response.login,
+                                response.nodeId,
+                                response.avatarUrl,
+                                response.gravatarId,
+                                response.url,
+                                response.htmlUrl,
+                                response.followersUrl,
+                                response.followingUrl,
+                                response.gistsUrl,
+                                response.starredUrl,
+                                response.subscriptionsUrl,
+                                response.organizationsUrl,
+                                response.reposUrl,
+                                response.eventsUrl,
+                                response.receivedEventsUrl,
+                                response.type,
+                                response.siteAdmin,
+                                response.name,
+                                response.company,
+                                response.blog,
+                                response.location,
+                                response.email,
+                                response.hireable,
+                                response.bio,
+                                response.twitterUsername,
+                                response.publicRepos,
+                                response.publicGists,
+                                response.followers,
+                                response.following,
+                                response.createdAt,
+                                response.updatedAt,
+                            )
+                            list.add(user)
+                        }
+                        adapter.setItems(ArrayList(list))
+                    }
+
                 }
                 Resource.Status.ERROR ->
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

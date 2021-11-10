@@ -8,4 +8,5 @@ class UserViewModel @ViewModelInject constructor(
     private val repository: UserRepository
 ): ViewModel() {
     val users = repository.getUsers()
+    val usersData = repository.getUsersRemote()
 }
