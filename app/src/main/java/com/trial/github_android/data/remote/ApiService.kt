@@ -13,4 +13,10 @@ interface ApiService {
 
     @GET("users/{username}")
     suspend fun getUser(@Path("username") username: String): Response<User>
+
+    @GET("users/{username}/followers")
+    suspend fun getUserFollowers(@Path("username") username: String): Response<GetUserResponse>
+
+    @GET("users/{username}/following")
+    suspend fun getUserFollowing(@Path("username") username: String): Response<GetUserResponse>
 }

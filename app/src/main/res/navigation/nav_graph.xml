@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_usersFragment_to_detailUserFragment"
             app:destination="@id/detailUserFragment" />
+        <action
+            android:id="@+id/action_usersFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailUserFragment"
         android:name="com.trial.github_android.ui.detailuser.DetailUserFragment"
         android:label="Detail User"
         tools:layout="@layout/fragment_detail_user" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.trial.github_android.ui.favorite.FavoriteFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorite" />
 </navigation>

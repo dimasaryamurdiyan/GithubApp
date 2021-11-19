@@ -7,4 +7,6 @@ class RemoteDataSource @Inject constructor(
 ): BaseDataSource() {
     suspend fun getUsers() = getResult { apiService.getAllUsers() }
     suspend fun getUser(username: String) = getResult { apiService.getUser(username) }
+    suspend fun getUserFollowing(username: String) = getResult { apiService.getUserFollowing(username) }
+    suspend fun getUserFollowers(username: String) = getResult { apiService.getUserFollowers(username) }
 }

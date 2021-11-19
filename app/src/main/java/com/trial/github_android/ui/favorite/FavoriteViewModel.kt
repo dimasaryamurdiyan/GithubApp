@@ -1,13 +1,11 @@
-package com.trial.github_android.ui.user
+package com.trial.github_android.ui.favorite
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.trial.github_android.data.repository.UserRepository
 
-class UserViewModel @ViewModelInject constructor(
+class FavoriteViewModel @ViewModelInject constructor(
     private val repository: UserRepository
 ): ViewModel() {
-    val users = repository.getUsers()
-
-    val usersFavorite = repository.getFavorites()
+    val favorites = repository.getFavoriteUser()
 }

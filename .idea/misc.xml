@@ -3,10 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_favorite.xml" value="0.2638888888888889" />
+        <entry key="app/src/main/res/drawable/ic_favorite_border.xml" value="0.2875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_detail_user.xml" value="0.24575056069352763" />
-        <entry key="app/src/main/res/layout/fragment_users.xml" value="0.14336372847011145" />
+        <entry key="app/src/main/res/layout/fragment_detail_user.xml" value="0.18579977567260017" />
+        <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.2713541666666667" />
+        <entry key="app/src/main/res/layout/fragment_followers.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/fragment_following.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_users.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/item_favorite.xml" value="0.2713541666666667" />
+        <entry key="app/src/main/res/layout/item_followers.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/item_following.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/item_user.xml" value="0.14296365046424978" />
+        <entry key="app/src/main/res/layout/layout_app_bar.xml" value="0.2713541666666667" />
       </map>
     </option>
   </component>

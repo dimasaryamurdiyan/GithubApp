@@ -2,10 +2,9 @@ package com.trial.github_android.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "users")
-data class UserEntity(
+@Entity(tableName = "followers")
+data class FollowersEntity(
     @PrimaryKey
     val id: Int,
     val login: String?,
@@ -24,20 +23,5 @@ data class UserEntity(
     val eventsUrl: String?,
     val receivedEventsUrl: String?,
     val type: String?,
-    val siteAdmin: Boolean?,
-    val name: String?,
-    val company: String?,
-    val blog: String?,
-    val location: String?,
-    val email: String?,
-    val hireable: String?,
-    val bio: String?,
-    val twitterUsername: String?,
-    val publicRepos: Int?,
-    val publicGists: Int?,
-    val followers: Int?,
-    val following: Int?,
-    val createdAt: String?,
-    val updatedAt: String?,
-    var isFavorite: Boolean?
+    val siteAdmin: Boolean?
 )

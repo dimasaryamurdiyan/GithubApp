@@ -15,6 +15,7 @@ import com.trial.github_android.R
 import com.trial.github_android.databinding.FragmentUsersBinding
 import com.trial.github_android.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.layout_app_bar.*
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -35,8 +36,20 @@ class UsersFragment : Fragment(), UserAdapter.UserItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
         setupRecyclerView()
         setupObservers()
+    }
+
+    private fun setupToolbar() {
+        binding?.apply {
+            appBar.tvTitle.text = "Users"
+            ivFavorite.setOnClickListener {
+                findNavController().navigate(
+                    R.id.action_usersFragment_to_favoriteFragment,
+                )
+            }
+        }
     }
 
     override fun onClicked(username: String) {
@@ -55,9 +68,10 @@ class UsersFragment : Fragment(), UserAdapter.UserItemListener {
     }
 
     private fun setupObservers() {
-        viewModel.users.observe(viewLifecycleOwner, Observer {
+        viewModel.users?.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
+                    val a = it.data
                     binding?.progressBar?.visibility = View.GONE
                     Timber.d("Users : ${it.data}")
                     if (!it.data.isNullOrEmpty()) adapter.setItems(ArrayList(it.data))
@@ -70,6 +84,8 @@ class UsersFragment : Fragment(), UserAdapter.UserItemListener {
             }
         })
     }
+
+
 
 
 }

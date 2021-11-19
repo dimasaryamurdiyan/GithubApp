@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.trial.github_android.data.entities.FollowersEntity
+import com.trial.github_android.data.entities.FollowingEntity
 import com.trial.github_android.data.entities.UserEntity
 
-@Database(entities = [UserEntity::class], version = 1, exportSchema = false)
+@Database(entities = [UserEntity::class, FollowingEntity::class, FollowersEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun userDao(): UserDao
 
@@ -19,6 +21,7 @@ abstract class AppDatabase: RoomDatabase() {
         private fun buildDatabase(appContext: Context) =
             Room.databaseBuilder(appContext, AppDatabase::class.java, "users")
                 .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
                 .build()
     }
 }
