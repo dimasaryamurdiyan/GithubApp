@@ -7,5 +7,6 @@ import com.trial.github_android.data.repository.UserRepository
 class FavoriteViewModel @ViewModelInject constructor(
     private val repository: UserRepository
 ): ViewModel() {
-    val favorites = repository.getFavoriteUser()
+//    val favorites = repository.getFavoriteUser()
+    val favorites = repository.getFavoritesAllUsers()
 }

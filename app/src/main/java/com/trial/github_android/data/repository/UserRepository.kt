@@ -8,6 +8,7 @@ import com.trial.github_android.data.local.UserDao
 import com.trial.github_android.data.remote.RemoteDataSource
 import com.trial.github_android.utils.Resource
 import com.trial.github_android.utils.performGetOperation
+import com.trial.github_android.utils.performGetOperationLocal
 import dagger.Module
 import dagger.hilt.InstallIn
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,8 @@ class UserRepository @Inject constructor(
         networkCall = { remoteDataSource.getUser(username) },
         saveCallResult = { response ->
             var favorite = localDataSource.getUser(username).value?.isFavorite
+            val test = localDataSource.getUser(username)
+            Timber.d("$test")
             Timber.d("favorite: $favorite")
             if(favorite == null){
                 favorite = false
@@ -204,61 +207,5 @@ class UserRepository @Inject constructor(
         localDataSource.updateUser(user)
     }
 
-    fun getFavorites() = performGetOperation(
-        databaseQuery = { localDataSource.getFavoriteUser() },
-        networkCall = { remoteDataSource.getUsers() },
-        saveCallResult = {
-            val list = ArrayList<UserEntity>()
-            for(response in it){
-                var favorite = localDataSource.getUser(response.login).value?.isFavorite
-                if(favorite == null){
-                    favorite = false
-                }
-                val user = UserEntity(
-                    response.id,
-                    response.login,
-                    response.nodeId,
-                    response.avatarUrl,
-                    response.gravatarId,
-                    response.url,
-                    response.htmlUrl,
-                    response.followersUrl,
-                    response.followingUrl,
-                    response.gistsUrl,
-                    response.starredUrl,
-                    response.subscriptionsUrl,
-                    response.organizationsUrl,
-                    response.reposUrl,
-                    response.eventsUrl,
-                    response.receivedEventsUrl,
-                    response.type,
-                    response.siteAdmin,
-                    response.name,
-                    response.company,
-                    response.blog,
-                    response.location,
-                    response.email,
-                    response.hireable,
-                    response.bio,
-                    response.twitterUsername,
-                    response.publicRepos,
-                    response.publicGists,
-                    response.followers,
-                    response.following,
-                    response.createdAt,
-                    response.updatedAt,
-                    favorite
-                )
-                list.add(user)
-            }
-            localDataSource.insertAll(list) }
-    )
-    fun getFavoriteUser() = liveData(Dispatchers.IO) {
-        emit(Resource.loading(data = null))
-        try {
-            emit(Resource.success(data = localDataSource.getFavoriteUser().value))
-        }catch (exception: Exception){
-            emit(Resource.error(exception.message ?: "Error Occurred!"))
-        }
-    }
+    fun getFavoritesAllUsers() = performGetOperationLocal(databaseQuery = {localDataSource.getFavoriteUser()})
 }
