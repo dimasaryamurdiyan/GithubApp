@@ -23,9 +23,7 @@ class UserRepository @Inject constructor(
         databaseQuery = { localDataSource.getUser(username) },
         networkCall = { remoteDataSource.getUser(username) },
         saveCallResult = { response ->
-            var favorite = localDataSource.getUser(username).value?.isFavorite
-            val test = localDataSource.getUser(username)
-            Timber.d("$test")
+            var favorite = localDataSource.getUserEntity(username).isFavorite
             Timber.d("favorite: $favorite")
             if(favorite == null){
                 favorite = false
@@ -74,7 +72,7 @@ class UserRepository @Inject constructor(
         saveCallResult = {
             val list = ArrayList<UserEntity>()
             for(response in it){
-                var favorite = localDataSource.getUser(response.login).value?.isFavorite
+                var favorite = localDataSource.getUserEntity(response.login).isFavorite
                 Timber.d("favorite-user: $favorite")
                 if(favorite == null){
                     favorite = false
@@ -206,6 +204,7 @@ class UserRepository @Inject constructor(
         user.isFavorite = newState
         localDataSource.updateUser(user)
     }
+
 
     fun getFavoritesAllUsers() = performGetOperationLocal(databaseQuery = {localDataSource.getFavoriteUser()})
 }

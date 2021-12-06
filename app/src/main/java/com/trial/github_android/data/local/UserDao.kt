@@ -21,6 +21,9 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE login = :username")
     fun getUser(username: String): LiveData<UserEntity>
 
+    @Query("SELECT * FROM users WHERE login = :username")
+    fun getUserEntity(username: String): UserEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(users: List<UserEntity>)
 
