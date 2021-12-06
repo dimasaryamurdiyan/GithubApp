@@ -9,5 +9,5 @@ class UserViewModel @ViewModelInject constructor(
 ): ViewModel() {
     val users = repository.getUsers()
 
-    val usersFavorite = repository.getFavorites()
+//    val usersFavorite = repository.getFavorites()
 }
