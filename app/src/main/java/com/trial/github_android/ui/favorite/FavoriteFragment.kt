@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.trial.github_android.R
 import com.trial.github_android.data.entities.FollowingEntity
@@ -21,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class FavoriteFragment : Fragment() {
+class FavoriteFragment : Fragment(), FavoriteAdapter.UserItemListener {
     private var  _fragmentFavoriteBinding: FragmentFavoriteBinding? = null
     private val binding get() = _fragmentFavoriteBinding
     private val viewModel: FavoriteViewModel by viewModels()
@@ -59,10 +61,17 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = FavoriteAdapter()
+        adapter = FavoriteAdapter(this)
         binding?.apply {
             rvFavorites.layoutManager = LinearLayoutManager(requireContext())
             rvFavorites.adapter = adapter
         }
+    }
+
+    override fun onClicked(username: String) {
+        findNavController().navigate(
+            R.id.action_favoriteFragment_to_detailUserFragment,
+            bundleOf("username" to username)
+        )
     }
 }
