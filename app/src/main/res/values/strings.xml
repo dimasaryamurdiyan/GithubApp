@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="following">Following</string>
     <string name="followers">Followers</string>
+    <string name="dark_theme">Dark Mode</string>
 </resources>

@@ -72,11 +72,12 @@ class UserRepository @Inject constructor(
         saveCallResult = {
             val list = ArrayList<UserEntity>()
             for(response in it){
-                var favorite = localDataSource.getUserEntity(response.login).isFavorite
-                Timber.d("favorite-user: $favorite")
-                if(favorite == null){
-                    favorite = false
+                val userEntity = localDataSource.getUserEntity(response.login)
+                var favorite = false
+                if(userEntity != null){
+                    favorite = userEntity.isFavorite!!
                 }
+                Timber.d("favorite-user: $favorite, ${response.login}" )
                 val user = UserEntity(
                     response.id,
                     response.login,

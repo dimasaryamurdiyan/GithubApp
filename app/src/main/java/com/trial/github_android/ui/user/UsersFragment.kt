@@ -49,6 +49,11 @@ class UsersFragment : Fragment(), UserAdapter.UserItemListener {
                     R.id.action_usersFragment_to_favoriteFragment,
                 )
             }
+            ivSettings.setOnClickListener {
+                findNavController().navigate(
+                    R.id.action_usersFragment_to_settingsFragment
+                )
+            }
         }
     }
 

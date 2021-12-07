@@ -8,6 +8,8 @@ import com.trial.github_android.data.local.UserDao
 import com.trial.github_android.data.remote.ApiService
 import com.trial.github_android.data.remote.RemoteDataSource
 import com.trial.github_android.data.repository.UserRepository
+import com.trial.github_android.utils.Preference
+import com.trial.github_android.utils.PreferenceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,4 +52,12 @@ object AppModule{
     fun provideRepository(remoteDataSource: RemoteDataSource,
                           localDataSource: UserDao) =
         UserRepository(remoteDataSource, localDataSource)
+
+    @Provides
+    @PreferenceInfo
+    internal fun providePrefFileName(): String = "github_pref"
+
+    @Provides
+    @Singleton
+    internal fun providePreference(preference: Preference): PreferenceImpl = preference
 }

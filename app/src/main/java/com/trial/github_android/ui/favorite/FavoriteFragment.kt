@@ -22,7 +22,7 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class FavoriteFragment : Fragment() {
-    private var _fragmentFavoriteBinding: FragmentFavoriteBinding? = null
+    private var  _fragmentFavoriteBinding: FragmentFavoriteBinding? = null
     private val binding get() = _fragmentFavoriteBinding
     private val viewModel: FavoriteViewModel by viewModels()
     private lateinit var adapter: FavoriteAdapter
