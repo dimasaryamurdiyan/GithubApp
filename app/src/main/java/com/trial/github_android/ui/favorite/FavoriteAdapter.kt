@@ -2,6 +2,7 @@ package com.trial.github_android.ui.favorite
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -10,8 +11,12 @@ import com.trial.github_android.data.entities.FollowingEntity
 import com.trial.github_android.data.entities.UserEntity
 import com.trial.github_android.databinding.ItemFavoriteBinding
 import com.trial.github_android.databinding.ItemFollowingBinding
+import com.trial.github_android.ui.user.UserAdapter
 
-class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>(){
+class FavoriteAdapter(private val listener: FavoriteAdapter.UserItemListener): RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>(){
+    interface UserItemListener {
+        fun onClicked(username: String)
+    }
     private val items = ArrayList<UserEntity>()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -23,7 +28,7 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteAdapter.FavoriteViewHolder {
         val binding = ItemFavoriteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FavoriteViewHolder(binding)
+        return FavoriteViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: FavoriteAdapter.FavoriteViewHolder, position: Int) {
@@ -34,8 +39,10 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>(
         return items.size
     }
 
-    class FavoriteViewHolder(private val binding: ItemFavoriteBinding): RecyclerView.ViewHolder(binding.root){
-
+    class FavoriteViewHolder(private val binding: ItemFavoriteBinding, private val listener: FavoriteAdapter.UserItemListener): RecyclerView.ViewHolder(binding.root), View.OnClickListener{
+        init {
+            binding.root.setOnClickListener(this)
+        }
         private lateinit var user: UserEntity
 
         @SuppressLint("SetTextI18n")
@@ -46,6 +53,10 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>(
                 .load(item.avatarUrl)
                 .transform(CircleCrop())
                 .into(binding.image)
+        }
+
+        override fun onClick(p0: View?) {
+            user.login?.let { listener.onClicked(it) }
         }
 
 
